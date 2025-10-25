@@ -1,6 +1,6 @@
 async function checkPanel(elementId) {
     try {
-        await fetch("https://panel.coramtix.in/", {
+        await fetch("https://panel1.coramtix.in/", {
             method: "HEAD",
             mode: "no-cors",
             cache: "no-cache"
