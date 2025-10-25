@@ -1,9 +1,14 @@
-function checkHTTP(url, elementId) {
-    fetch(url, {mode: "no-cors"}).then(() => {
+async function checkPanel(elementId) {
+    try {
+        await fetch("https://panel.coramtix.in/", {
+            method: "HEAD",
+            mode: "no-cors",
+            cache: "no-cache"
+        });
         document.getElementById(elementId).innerText = "✅ Online";
-    }).catch(() => {
+    } catch (e) {
         document.getElementById(elementId).innerText = "❌ Offline";
-    });
+    }
 }
 
 function checkPort(ip, port, elementId) {
@@ -14,13 +19,11 @@ function checkPort(ip, port, elementId) {
 }
 
 function updateStatus() {
-    // Panel via Cloudflare HTTPS
-    checkHTTP("https://panel.coramtix.in/", "panel-status");
+    checkPanel("panel-status");
 
-    // Nodes via direct IP:PORT
     checkPort("YOUR_NODE1_IP", 8080, "node1-status");
     checkPort("YOUR_NODE2_IP", 8080, "node2-status");
-    checkPort("YOUR_NODE3_IP", 8080, "node3-status");
+    checkPort("node-in-3.coramtix.in", 8080, "node3-status");
     checkPort("YOUR_NODEBOT_IP", 8080, "node4-status");
 }
 
