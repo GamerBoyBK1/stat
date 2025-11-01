@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>System Status - CoRamTix</title>
+    <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+    
+    <!-- Meta Tags -->
+    <meta property="og:site_name" content="CoRamTix">
+    <meta property="og:title" content="System Status - CoRamTix">
+    <meta property="og:type" content="website">
+    <meta property="og:description" content="Real-time status monitoring for CoRamTix hosting services.">
+    <meta name="description" content="Real-time status monitoring for CoRamTix hosting services.">
+    
+    <!-- Stylesheets -->
+    <link href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@0ac23ca/css/all.css" rel="stylesheet" type="text/css" />
+    
+    <!-- Status Page CSS -->
+    <link rel="stylesheet" type="text/css" href="status.css">
+</head>
+<body>
+    
+    <!-- SVG Icons Library -->
+    <svg style="display: none;">
+        <symbol id="icon-server" viewBox="0 0 24 24">
+            <path d="M4 2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 9h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2zm0 9h16a2 2 0 0 1 2 2v0a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v0a2 2 0 0 1 2-2z"/>
+            <circle cx="6" cy="5" r="1"/>
+            <circle cx="6" cy="14" r="1"/>
+            <circle cx="6" cy="21" r="1"/>
+        </symbol>
+        
+        <symbol id="icon-network" viewBox="0 0 24 24">
+            <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5zm0 18c-3.86-.96-7-5.54-7-10V8.3l7-3.11 7 3.11V10c0 4.46-3.14 9.04-7 10z"/>
+            <circle cx="12" cy="12" r="3"/>
+        </symbol>
+        
+        <symbol id="icon-hdd" viewBox="0 0 24 24">
+            <rect x="2" y="12" width="20" height="10" rx="2"/>
+            <path d="M6 12V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8"/>
+            <circle cx="6" cy="17" r="1"/>
+            <circle cx="10" cy="17" r="1"/>
+        </symbol>
+        
+        <symbol id="icon-check" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" fill="currentColor"/>
+            <path d="M9 12l2 2 4-4" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </symbol>
+        
+        <symbol id="icon-warning" viewBox="0 0 24 24">
+            <path d="M12 2L2 20h20L12 2zm0 5l7 13H5l7-13z" fill="currentColor"/>
+            <line x1="12" y1="10" x2="12" y2="14" stroke="white" stroke-width="2"/>
+            <circle cx="12" cy="17" r="1" fill="white"/>
+        </symbol>
+        
+        <symbol id="icon-x-circle" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" fill="currentColor"/>
+            <line x1="8" y1="8" x2="16" y2="16" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            <line x1="16" y1="8" x2="8" y2="16" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        </symbol>
+        
+        <symbol id="icon-sync" viewBox="0 0 24 24">
+            <path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/>
+        </symbol>
+
+        <symbol id="icon-panel" viewBox="0 0 24 24">
+            <rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+            <line x1="3" y1="9" x2="21" y2="9" stroke="currentColor" stroke-width="2"/>
+            <line x1="9" y1="9" x2="9" y2="21" stroke="currentColor" stroke-width="2"/>
+        </symbol>
+
+        <symbol id="icon-globe" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+            <line x1="2" y1="12" x2="22" y2="12" stroke="currentColor" stroke-width="2"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" fill="none" stroke="currentColor" stroke-width="2"/>
+        </symbol>
+
+        <symbol id="icon-shield" viewBox="0 0 24 24">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="none" stroke="currentColor" stroke-width="2"/>
+        </symbol>
+
+        <symbol id="icon-mail" viewBox="0 0 24 24">
+            <rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+            <polyline points="3 7 12 13 21 7" fill="none" stroke="currentColor" stroke-width="2"/>
+        </symbol>
+
+        <symbol id="icon-credit-card" viewBox="0 0 24 24">
+            <rect x="2" y="5" width="20" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+            <line x1="2" y1="10" x2="22" y2="10" stroke="currentColor" stroke-width="2"/>
+        </symbol>
+    </svg>
+
+    <div class="status-page">
+        <div class="container">
+            <div class="status-header">
+                <h1>System Status</h1>
+                <p>Real-time monitoring of CoRamTix services and infrastructure</p>
+                <div class="overall-status checking" id="overallStatus">
+                    <svg class="svg-icon"><use href="#icon-sync"/></svg>
+                    <span>Checking Systems...</span>
+                </div>
+            </div>
+
+            <!-- Panel Status -->
+            <div class="service-category">
+                <h3 class="category-title">
+                    <div class="category-title-icon">
+                        <svg><use href="#icon-server"/></svg>
+                    </div>
+                    Control Panel
+                </h3>
+                <div id="panelServices"></div>
+            </div>
+
+            <!-- Node Status -->
+            <div class="service-category">
+                <h3 class="category-title">
+                    <div class="category-title-icon">
+                        <svg><use href="#icon-network"/></svg>
+                    </div>
+                    Game Server Nodes
+                </h3>
+                <div id="nodeServices"></div>
+            </div>
+
+            <!-- Additional Services -->
+            <div class="service-category">
+                <h3 class="category-title">
+                    <div class="category-title-icon">
+                        <svg><use href="#icon-globe"/></svg>
+                    </div>
+                    Additional Services
+                </h3>
+                <div id="additionalServices"></div>
+            </div>
+
+            <div class="refresh-info">
+                <p>
+                    <svg class="svg-icon"><use href="#icon-sync"/></svg>
+                    Auto-refreshes every 30 seconds
+                </p>
+                <p style="font-size: 0.9rem; color: #adb5bd; font-weight: 600;">
+                    Last updated: <span id="updateTime">--:--:--</span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Powered By Footer -->
+    <footer class="powered-footer">
+        <div class="container">
+            <p>
+                Powered by 
+                <a href="https://www.coramtix.in" target="_blank" rel="noopener noreferrer">
+                    <strong>CoRamTix</strong>
+                </a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // ===================================
+        // CONFIGURATION
+        // ===================================
+        const CONFIG = {
+            panel: {
+                url: 'https://panel.coramtix.in',
+                name: 'Game Panel',
+                description: 'Game server management interface',
+                icon: 'icon-panel',
+                color: '#7200ff'
+            },
+            nodes: [
+                {
+                    name: 'Node 1 - Mumbai',
+                    location: 'IN-MUM-01',
+                    url: 'https://node-in-1.coramtix.in:8080',
+                    description: 'Minecraft, Discord Bots',
+                    icon: 'icon-hdd',
+                    color: '#9333ff'
+                },
+                {
+                    name: 'Node 2 - Delhi',
+                    location: 'IN-DEL-01',
+                    url: 'https://node-in-2.coramtix.in:8080',
+                    description: 'VPS Hosting, Web Applications',
+                    icon: 'icon-hdd',
+                    color: '#7200ff'
+                },
+                {
+                    name: 'Node 3 - Bangalore',
+                    location: 'IN-BLR-01',
+                    url: 'https://node-in-3.coramtix.in:8080',
+                    description: 'Game Servers, High Performance',
+                    icon: 'icon-hdd',
+                    color: '#5500cc'
+                }
+            ],
+            additionalServices: [
+                {
+                    name: 'DDoS Protection',
+                    description: 'Network security and filtering',
+                    icon: 'icon-shield',
+                    color: '#00d97e',
+                    url: null
+                },
+                {
+                    name: 'Email System',
+                    description: 'SMTP mail delivery',
+                    icon: 'icon-mail',
+                    color: '#f6c343',
+                    url: null
+                },
+                {
+                    name: 'Billing System',
+                    description: 'Payment processing and invoicing',
+                    icon: 'icon-credit-card',
+                    color: '#e63757',
+                    url: null
+                }
+            ],
+            refreshInterval: 30000,
+            timeout: 5000
+        };
+
+        // ===================================
+        // STATUS CHECKER
+        // ===================================
+        async function checkStatus(url) {
+            if (!url) return true;
+            
+            try {
+                const controller = new AbortController();
+                const timeout = setTimeout(() => controller.abort(), CONFIG.timeout);
+                
+                await fetch(url, {
+                    method: 'HEAD',
+                    mode: 'no-cors',
+                    cache: 'no-cache',
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeout);
+                return true;
+            } catch (error) {
+                return false;
+            }
+        }
+
+        // ===================================
+        // RENDER SERVICES
+        // ===================================
+        function renderPanelService() {
+            const container = document.getElementById('panelServices');
+            container.innerHTML = `
+                <div class="service-item" id="panel-status">
+                    <div class="service-info">
+                        <div class="service-icon" style="color: ${CONFIG.panel.color};">
+                            <svg><use href="#${CONFIG.panel.icon}"/></svg>
+                        </div>
+                        <div class="service-details">
+                            <h4>${CONFIG.panel.name}</h4>
+                            <p>${CONFIG.panel.description}</p>
+                        </div>
+                    </div>
+                    <div class="service-status">
+                        <span class="status-badge checking">
+                            <span class="status-indicator checking"></span>
+                            <span>Checking...</span>
+                        </span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderNodeServices() {
+            const container = document.getElementById('nodeServices');
+            container.innerHTML = CONFIG.nodes.map((node, index) => `
+                <div class="service-item" id="node-${index}">
+                    <div class="service-info">
+                        <div class="service-icon" style="color: ${node.color};">
+                            <svg><use href="#${node.icon}"/></svg>
+                        </div>
+                        <div class="service-details">
+                            <h4>${node.name}</h4>
+                            <p>${node.description}</p>
+                            <span class="location-badge">${node.location}</span>
+                        </div>
+                    </div>
+                    <div class="service-status">
+                        <span class="status-badge checking">
+                            <span class="status-indicator checking"></span>
+                            <span>Checking...</span>
+                        </span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderAdditionalServices() {
+            const container = document.getElementById('additionalServices');
+            container.innerHTML = CONFIG.additionalServices.map((service, index) => `
+                <div class="service-item" id="additional-${index}">
+                    <div class="service-info">
+                        <div class="service-icon" style="color: ${service.color};">
+                            <svg><use href="#${service.icon}"/></svg>
+                        </div>
+                        <div class="service-details">
+                            <h4>${service.name}</h4>
+                            <p>${service.description}</p>
+                        </div>
+                    </div>
+                    <div class="service-status">
+                        <span class="status-badge ${service.url ? 'checking' : 'online'}">
+                            <span class="status-indicator ${service.url ? 'checking' : 'online'}"></span>
+                            <span>${service.url ? 'Checking...' : 'Active'}</span>
+                        </span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ===================================
+        // UPDATE STATUS
+        // ===================================
+        async function updatePanelStatus() {
+            const isOnline = await checkStatus(CONFIG.panel.url);
+            const element = document.querySelector('#panel-status .status-badge');
+            
+            element.className = `status-badge ${isOnline ? 'online' : 'offline'}`;
+            element.innerHTML = `
+                <span class="status-indicator ${isOnline ? 'online' : 'offline'}"></span>
+                <span>${isOnline ? 'Online' : 'Offline'}</span>
+            `;
+        }
+
+        async function updateNodeStatus(index) {
+            const node = CONFIG.nodes[index];
+            const isOnline = await checkStatus(node.url);
+            const element = document.querySelector(`#node-${index} .status-badge`);
+            
+            element.className = `status-badge ${isOnline ? 'online' : 'offline'}`;
+            element.innerHTML = `
+                <span class="status-indicator ${isOnline ? 'online' : 'offline'}"></span>
+                <span>${isOnline ? 'Online' : 'Offline'}</span>
+            `;
+        }
+
+        async function updateAdditionalServiceStatus(index) {
+            const service = CONFIG.additionalServices[index];
+            if (!service.url) return;
+            
+            const isOnline = await checkStatus(service.url);
+            const element = document.querySelector(`#additional-${index} .status-badge`);
+            
+            element.className = `status-badge ${isOnline ? 'online' : 'offline'}`;
+            element.innerHTML = `
+                <span class="status-indicator ${isOnline ? 'online' : 'offline'}"></span>
+                <span>${isOnline ? 'Active' : 'Inactive'}</span>
+            `;
+        }
+
+        async function updateAllStatuses() {
+            await updatePanelStatus();
+            
+            for (let i = 0; i < CONFIG.nodes.length; i++) {
+                await updateNodeStatus(i);
+            }
+            
+            for (let i = 0; i < CONFIG.additionalServices.length; i++) {
+                await updateAdditionalServiceStatus(i);
+            }
+            
+            updateOverallStatus();
+            updateTime();
+        }
+
+        function updateOverallStatus() {
+            const badges = document.querySelectorAll('.status-badge');
+            let offlineCount = 0;
+            let totalServices = 0;
+            
+            badges.forEach(badge => {
+                if (badge.classList.contains('online') || badge.classList.contains('offline')) {
+                    totalServices++;
+                    if (badge.classList.contains('offline')) {
+                        offlineCount++;
+                    }
+                }
+            });
+            
+            const overall = document.getElementById('overallStatus');
+            
+            if (offlineCount === 0) {
+                overall.className = 'overall-status operational';
+                overall.innerHTML = `
+                    <svg class="svg-icon"><use href="#icon-check"/></svg>
+                    <span>All Systems Operational</span>
+                `;
+            } else if (offlineCount === totalServices) {
+                overall.className = 'overall-status down';
+                overall.innerHTML = `
+                    <svg class="svg-icon"><use href="#icon-x-circle"/></svg>
+                    <span>All Systems Down</span>
+                `;
+            } else {
+                overall.className = 'overall-status degraded';
+                overall.innerHTML = `
+                    <svg class="svg-icon"><use href="#icon-warning"/></svg>
+                    <span>${offlineCount} Service${offlineCount > 1 ? 's' : ''} Offline</span>
+                `;
+            }
+        }
+
+        function updateTime() {
+            const time = new Date().toLocaleTimeString('en-IN', { 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit',
+                hour12: false 
+            });
+            document.getElementById('updateTime').textContent = time;
+        }
+
+        // ===================================
+        // INITIALIZE
+        // ===================================
+        document.addEventListener('DOMContentLoaded', function() {
+            renderPanelService();
+            renderNodeServices();
+            renderAdditionalServices();
+            updateAllStatuses();
+            
+            setInterval(updateAllStatuses, CONFIG.refreshInterval);
+            setInterval(updateTime, 1000);
+        });
+    </script>
+</body>
+</html>
